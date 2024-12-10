@@ -26,18 +26,15 @@ public class JWTGenerator {
 		Date currentDate = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
-		calendar.add(Calendar.YEAR, 1); // Add 1 year
+		calendar.add(Calendar.MINUTE, 5);
 		Date expireDate = calendar.getTime();
-		String token = Jwts.builder()
+        return Jwts.builder()
 
-				.setIssuedAt(new Date())
-				.setExpiration(expireDate)
-				.setSubject(username)
-				.signWith(key, SignatureAlgorithm.HS512)
-				.compact();
-		System.out.println("New token :");
-		System.out.println(token);
-		return token;
+                .setIssuedAt(new Date())
+                .setExpiration(expireDate)
+                .setSubject(username)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
 	}
 
 	public String getUsernameFromJWT(String token) {
