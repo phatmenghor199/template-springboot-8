@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        table.unstyledTable {
+          width: 650px;
+          text-align: center;
+        }
+
+        table.unstyledTable td,
+        table.unstyledTable th {
+          border: 1px solid #AAAAAA;
+          padding: 4px 4px;
+        }
+
+        table.unstyledTable tbody td {
+          font-size: 15px;
+          color: #333333;
+        }
+
+        /* Updated header gradient using #EC7925 */
+        table.unstyledTable thead {
+          background: #EC7925; /* Fallback color */
+          background: -moz-linear-gradient(top, #F7A45E 0%, #EC7925 50%, #D55A1D 100%);
+          background: -webkit-linear-gradient(top, #F7A45E 0%, #EC7925 50%, #D55A1D 100%);
+          background: linear-gradient(to bottom, #F7A45E 0%, #EC7925 50%, #D55A1D 100%);
+        }
+
+        table.unstyledTable thead th {
+          font-size: 16px;
+          font-weight: bold;
+          color: #FFFFFF;
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- Dynamic greeting using the greeting variable -->
+<div>
+    <p th:text="${greeting}">Hello, Recipient!</p>
+</div>
+<div>
+    <p>
+        Please find indicative exchange rates offered by CPBank for your reference.
+    </p>
+</div>
+<table class="unstyledTable">
+    <thead>
+    <tr>
+        <th>Currencies</th>
+        <th>Bank Buys</th>
+        <th>Bank Sells</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p>USD / KHR</p>
+        </td>
+        <td>
+            <p th:text="${usd_buy}">Coming soon</p>
+        </td>
+        <td>
+            <p th:text="${usd_sell}">Coming soon</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>USD / THB</p>
+        </td>
+        <td>
+            <p th:text="${thb_buy}">Coming soon</p>
+        </td>
+        <td>
+            <p th:text="${thb_sell}">Coming soon</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <p>
+        The above rates are subject to change without prior notice. Please contact dealers via 070 600 048 or treasury@cambodiapostbank.com.kh.
+    </p>
+</div>
+
+<p>Best Regards.<br />Treasury Department</p>
+</body>
+</html>
