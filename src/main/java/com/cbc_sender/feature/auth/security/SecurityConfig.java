@@ -3,6 +3,7 @@ package com.cbc_sender.feature.auth.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,8 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private JwtAuthEntryPoint authEntryPoint;
-    private CustomUserDetailsService userDetailsService;
+    private final JwtAuthEntryPoint authEntryPoint;
+    private final CustomUserDetailsService userDetailsService;
 
     @Autowired
     public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
@@ -31,7 +32,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()
+                .cors().and()
+                .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint)
                 .and()
@@ -39,11 +41,23 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/**", "/api/images/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                // Public endpoints
+                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/images/**").permitAll()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                // Role-based access control examples
+//                .antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/api/v1/dev/**").hasAuthority("DEVELOPER")
+
+                // For any other request, require authentication
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
+
+        // Add JWT filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

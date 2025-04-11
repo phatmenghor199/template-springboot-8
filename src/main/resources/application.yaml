@@ -1,10 +1,10 @@
 spring:
   application:
-    name: smart-shop
+    name: cbc-sender
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       show-sql: true
       format_sql: true
     properties:
@@ -27,11 +27,64 @@ spring:
       idleTimeout: 600000
       maxLifetime: 1800000
 
-
+# JWT Configuration
 jwt:
   secret:
     key: da2bd42bef8f9f957d647ed13571d35b59c7055fb723eacdb05154878da17d77d3180385fc232cab38bded0fc7dbda0d439cc275e91164ade266d64d50633bc7
-  expiration-min: 9999999999999
+  expiration-min: 1440  # 24 hours
+  issuer: cbc-sender-api
 
+# Default users configuration
+app:
+  # Whether to create default users on startup
+  default-users:
+    create: true
 
+  # Default admin user
+  admin:
+    email: admin@cbcsender.com
+    password: Admin@123
 
+  # Default developer user
+  developer:
+    email: developer@cbcsender.com
+    password: Developer@123
+
+  # Default regular user
+  user:
+    email: user@cbcsender.com
+    password: User@123
+
+# CORS Configuration
+cors:
+  allowed-origins: "*"
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  max-age: 3600
+
+# Security Configuration
+security:
+  require-ssl: false
+  basic:
+    enabled: false
+  ignored: /api/v1/auth/**,/swagger-ui/**,/v3/api-docs/**
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.cbc_sender: DEBUG
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+    org.hibernate: WARN
+
+# Swagger/OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+  show-actuator: true

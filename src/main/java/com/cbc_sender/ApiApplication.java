@@ -10,7 +10,7 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan(basePackages = "com.mailsender.api")
+@ComponentScan(basePackages = "com.cbc_sender")
 public class ApiApplication {
 
 	@PostConstruct
