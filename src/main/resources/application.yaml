@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: smart-shop
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      format_sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  datasource:
+    url: jdbc:postgresql://192.168.127.86:5432/cbc_data_check
+    username: postgres
+    password: 123cp!@#
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+
+
+jwt:
+  secret:
+    key: da2bd42bef8f9f957d647ed13571d35b59c7055fb723eacdb05154878da17d77d3180385fc232cab38bded0fc7dbda0d439cc275e91164ade266d64d50633bc7
+  expiration-min: 9999999999999
+
+
+
